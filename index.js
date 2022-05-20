@@ -188,6 +188,16 @@ async function run() {
       res.send({ admin: isAdmin })
     })
 
+    // delete an user
+
+    app.delete('/user/admin/:email', verifyJWT,verifyAdmin, async (req, res) => {
+      const email = req.params.email;
+      const filter = { email: email }
+      const result = await userCollection.deleteOne(filter)
+      res.send(result)
+    })
+
+
     
 
     //warning
