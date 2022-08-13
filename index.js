@@ -266,8 +266,9 @@ async function run() {
     // delete specific booking
 
     app.delete('/allbooking/:id', verifyJWT, verifyAdmin, async (req, res) => {
-      const email = req.params.id;
-      const filter = { email: email }
+      const id = req.params.id;
+      console.log(id)
+      const filter = { _id: ObjectId(id) }
       const result = await bookingCollection.deleteOne(filter)
       res.send(result)
     })
