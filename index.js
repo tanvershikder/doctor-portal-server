@@ -229,6 +229,8 @@ async function run() {
 
     })
 
+
+
     //get specafic user data
 
     app.get('/bookings', verifyJWT, async (req, res) => {
@@ -245,6 +247,14 @@ async function run() {
 
     })
 
+     //get all bookings 
+
+     app.get('/allbooking', verifyJWT, async (req, res) => {
+      const result = await bookingCollection.find().toArray()
+      res.send(result)
+    })
+
+
     // get specipic booking by id
     app.get('/bookings/:appointmetId', verifyJWT, async (req, res) => {
       const appointmetId = req.params.appointmetId;
@@ -253,6 +263,16 @@ async function run() {
       res.send(booking)
     })
 
+    // delete specific booking
+
+    app.delete('/allbooking/:id', verifyJWT, verifyAdmin, async (req, res) => {
+      const email = req.params.id;
+      const filter = { email: email }
+      const result = await bookingCollection.deleteOne(filter)
+      res.send(result)
+    })
+
+   
     // post data on booking collection
 
     app.post('/bookings', async (req, res) => {
